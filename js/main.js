@@ -16,19 +16,20 @@ class Paciente {
   constructor(
     nombre,
     apellido,
+    telefono,
     edad,
     obraSocial,
     diaAsignado,
-    horaAsignada,
-    valorSesion
+    horaAsignada
+
   ) {
     this.nombre = nombre;
     this.apellido = apellido;
+    this.telefono = telefono;
     this.edad = edad;
     this.obraSocial = obraSocial;
     this.diaAsignado = diaAsignado;
     this.horaAsignada = horaAsignada;
-    this.valorSesion = valorSesion;
   }
 }
 
@@ -51,6 +52,8 @@ const cargarPaciente = () => {
   let diaInput = document.getElementById("diaInput").value;
   let horaInput = document.getElementById("horaInput").value;
   let emailInput = document.getElementById("emailInput").value;
+  let obraSocialSelect = document.getElementById("obraSocialSelect").value;
+
 
   const nuevoPaciente = new Paciente(
     nombresInput,
@@ -65,4 +68,6 @@ const cargarPaciente = () => {
 
   misPacientes.push(nuevoPaciente);
   localStorage.setItem("datos", JSON.stringify(misPacientes));
+  const pacientesEnLocalStorage = JSON.parse(localStorage.getItem("datos"));
+  console.log(pacientesEnLocalStorage);
 };
