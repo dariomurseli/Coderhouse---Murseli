@@ -1,73 +1,107 @@
-// La tercera pre-entrega consiste en:
-// Definir eventos a manejar y su función de respuesta: el manejo de DOM y eventos, deben permitir dar
-// notificaciones al usuario, del resultado de las funciones de procesos (funcionalidades simuladas para el circuito escogido).
-// Modificar el DOM, ya sea para definir elementos al cargar la página o para realizar salidas de un procesamiento. Como lo
-// vimos en las clases 10 y 11 donde interactuamos con el DOM para listar elementos o mostrar datos de un objeto (entidad de nuestro
-// contexto) en alguna sección de nuestro HTML.
-// Deberán agregar y entregar uso de JSON y Storage: almacenar datos (mediante clave-valor) en el Storage y recuperarlos, permitirá
-// un almacenamiento y gestión de la información más apropiada para conseguir el flujo de la simulación deseada (como lo vimos en la
-// clase 11 cuando creamos carreras y le añadimos cátedras o cuando matriculamos estudiantes a una carrera).
-// En relación con la primera y segunda pre-entregas: ya no usamos alert() como salida y promt() como entrada,
-// ahora modificamos el DOM para las salidas y capturamos los eventos del usuario sobre inputs y botones para las entradas.
-// No dejar código comentado, descartarlo.
+const obrasSociales = [
+  new ObraSocial(1, "Swizz Metrical"),
+  new ObraSocial(2, "OXDE"),
+  new ObraSocial(3, "Mortem lentum Salut"),
+  new ObraSocial(4, "Amigos de la Salud"),
+];
+let obrasSocialList = document.getElementById("obraSocialSelect");
 
+obrasSociales.forEach((unaObraSocial) => {
+  let item = document.createElement("option");
+  item.value = unaObraSocial.id.toString();
+  item.innerText = unaObraSocial.nombre;
+  obrasSocialList.append(item);
+});
 
-class Paciente {
-  constructor(
-    nombre,
-    apellido,
-    telefono,
-    edad,
-    obraSocial,
-    diaAsignado,
-    horaAsignada
-
-  ) {
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.telefono = telefono;
-    this.edad = edad;
-    this.obraSocial = obraSocial;
-    this.diaAsignado = diaAsignado;
-    this.horaAsignada = horaAsignada;
-  }
-}
 
 let misPacientes = [];
 
 const form = document.getElementById("cargaForm");
+const inputs = form.querySelectorAll("input");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   cargarPaciente();
+  cargarTablaPacientes();
 });
-
 
 const cargarPaciente = () => {
   let nombresInput = document.getElementById("nombresInput").value;
   let apellidosInput = document.getElementById("apellidosInput").value;
   let telefonoInput = document.getElementById("telefonoInput").value;
   let edadInput = document.getElementById("edadInput").value;
-  let inicioInput = document.getElementById("inicioInput").value;
   let diaInput = document.getElementById("diaInput").value;
   let horaInput = document.getElementById("horaInput").value;
   let emailInput = document.getElementById("emailInput").value;
-  let obraSocialSelect = document.getElementById("obraSocialSelect").value;
-
+  let obraSocialSelect = document.getElementById("obraSocialSelect").item;
 
   const nuevoPaciente = new Paciente(
     nombresInput,
     apellidosInput,
     telefonoInput,
     edadInput,
-    inicioInput,
     diaInput,
     horaInput,
-    emailInput
+    emailInput,
+    obraSocialSelect
   );
 
-  misPacientes.push(nuevoPaciente);
-  localStorage.setItem("datos", JSON.stringify(misPacientes));
-  const pacientesEnLocalStorage = JSON.parse(localStorage.getItem("datos"));
-  console.log(pacientesEnLocalStorage);
+  // Obtener los pacientes ya existentes en el localStorage
+  const pacientesEnLocalStorage =
+    JSON.parse(localStorage.getItem("datos")) || [];
+
+  // Agregar el nuevo paciente a la lista de pacientes
+  pacientesEnLocalStorage.push(nuevoPaciente);
+
+  // Guardar la lista actualizada de pacientes en localStorage
+  localStorage.setItem("datos", JSON.stringify(pacientesEnLocalStorage));
+
+  // Cargar la tabla actualizada de pacientes
+  cargarTablaPacientes();
 };
+
+const cargarTablaPacientes = () => {
+  const pacientesEnLocalStorage = JSON.parse(localStorage.getItem("datos"));
+  const tablaPacientes = document.getElementById("tabla-pacientes");
+  misPacientes = JSON.parse(localStorage.getItem("datos"));
+  // Limpiar la tabla antes de agregar nuevos datos
+  tablaPacientes.innerHTML = "";
+
+  // Agregar cada paciente a la tabla
+  pacientesEnLocalStorage.forEach((paciente) => {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `
+      <td>${paciente.nombre}</td>
+      <td>${paciente.apellido}</td>
+      <td>${paciente.telefono}</td>
+      <td>${paciente.edad}</td>
+      <td>${paciente.email}</td>
+      <td>${paciente.obraSocial}</td>
+      <td>${paciente.diaAsignado}</td>
+      <td>${paciente.horaAsignada}</td>
+      
+    `;
+    tablaPacientes.appendChild(fila);
+  });
+  Swal.fire("Se a cargado correctamente el nuevo paciente");
+};
+
+//Accedo al boton por su ID
+const botonBorrarStorage = document.getElementById("borrar-storage");
+botonBorrarStorage.addEventListener("click", borrarStorage);
+
+function borrarStorage() {
+  localStorage.clear();
+  location.reload();
+}
+
+// const botonBorrarCampos = document.getElementById("borrar-storage");
+// botonBorrarCampos.addEventListener("click", borrarCampos);
+function borrarCampos() {
+  misPacientes.forEach((valor.values = " "));
+}
+misPacientes.forEach((element) => {
+  console.log(element);
+});
+
+borrarCampos();

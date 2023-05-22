@@ -71,10 +71,7 @@
             <label for="edadInput" class="form-label">Edad</label>
             <input type="text" class="form-control" placeholder="Ej: 45" id="edadInput">
           </div>
-          <div class="col-2">
-            <label for="inicioInput" class="form-label">Fecha de ingreso</label>
-            <input type="text" class="form-control" placeholder="Ej: 12/04/2022" id="inicioInput" >
-          </div>
+         
           <div class="col-2">
             <label for="diaInput" class="form-label">Día de la sesión</label>
             <input type="text" class="form-control" placeholder="Ej: Lunes" id="diaInput">
@@ -89,20 +86,50 @@
             <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Ej:elnombre@gmail.com" >
           </div>
           <div class="col-8">
-            <label for="obraSocialSelect" class="form-label" id="obraSocialSelect">Obra social</label>
-            <select class="form-select" aria-label="Obra social del paciente">
+            <label for="obraSocialSelect" class="form-label">Obra social</label>
+            <select class="form-select" aria-label="Obra social del paciente" id="obraSocialSelect">
               <option selected>Seleccione una obra social</option>
              
             </select>
           </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary mb-3" id="cargarButton">Cargar paciente</button>
-            <button type="submit" class="btn btn-info mb-3 " id="cargarConsultar">Consultar</button>
-          </div>
-          
+         
+          <div class="col-12 mb-3">
+            <button
+                type="submit"
+                class="btn btn-primary mb-3"
+                id="cargarButton">
+                Cargar paciente
+            </button>
+            <button
+                id="borrar-storage"
+                type="button"
+                class="btn btn-danger mb-3">
+                <i class="bi bi-trash"></i>
+                BORRAR TURNOS
+            </button>
+        </div>
         </form>
       </section>
+      <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Teléfono</th>
+                <th>Edad</th>
+                <th>Día</th>
+                <th>Hora sesión</th>
+                <th>Email</th>
+                <th>Obra social</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-pacientes"></tbody>
+    </table>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/clases/Paciente.js"></script>
+    <script src="js/clases/ObraSocial.js"></script>
     <script src="js/main.js"></script>
   
   </body>
